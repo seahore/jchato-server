@@ -1,1 +1,1 @@
-java -jar out/jar/java-socket-server.jar 666 10000
+java -jar out/jar/java-socket-server.jar 666

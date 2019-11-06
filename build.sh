@@ -14,7 +14,7 @@ find -name "*.java" > $root_dir/srclist
 cat $root_dir/srclist
 
 mkdir $out/classes
-javac -d $out/classes -encoding utf-8 -g -sourcepath $src @srclist
+javac -d $out/classes -encoding utf-8 -g -sourcepath $src @$root_dir/srclist
 
 cd $out/classes
 mkdir $out/jar
