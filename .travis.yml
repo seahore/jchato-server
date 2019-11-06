@@ -1,0 +1,9 @@
+language: java
+sudo: required
+jdk:
+  - openjdk8
+  - openjdk11
+os:
+  - linux
+script:
+  - /bin/sh build.sh && /bin/sh test/test.sh
