@@ -18,7 +18,7 @@ javac -d $out/classes -encoding utf-8 -g -sourcepath $src @srclist
 
 cd $out/classes
 mkdir $out/jar
-jar -cvfm $out/jar/java-socket-server.jar *
+jar -cvfm $out/jar/java-socket-server.jar $root_dir/MANIFEST.MF .
 
 sudo chmod 755 $out/jar/java-socket-server.jar
 exit 0
