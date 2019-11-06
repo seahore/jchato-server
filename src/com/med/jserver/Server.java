@@ -6,9 +6,9 @@ import java.io.*;
 public class Server extends Thread {
     private ServerSocket ss;
 
-    public Server(int port) throws IOException {
+    public Server(int port, int timeout) throws IOException {
         ss = new ServerSocket(port);
-        ss.setSoTimeout(5000);
+        ss.setSoTimeout(timeout);
     }
 
     public void run() {
@@ -16,7 +16,7 @@ public class Server extends Thread {
             try {
                 System.out.println("在本地" + ss.getLocalPort() + "端口处开启服务器socket，等待远程连接……");
                 Socket server = ss.accept();
-                System.out.println("连接远程主机，地址为" + server.getRemoteSocketAddress());
+                System.out.println("远程主机客户端请求连接，地址为" + server.getRemoteSocketAddress());
                 DataInputStream din = new DataInputStream(server.getInputStream());
                 System.out.println(din.readUTF());
                 DataOutputStream dout = new DataOutputStream(server.getOutputStream());
