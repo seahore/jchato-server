@@ -18,12 +18,12 @@ public class JServer {
         }
 
         try {
-            Server t = new Server(port);
-            t.run();
-        } catch (BindException be) {
-            System.out.println(port + "端口已被占用，请重新设置。");
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
+        Server t = new Server(port);
+        t.run();
+    } catch (BindException be) {
+        System.out.println(port + "端口已被占用，请重新设置。");
+    } catch (IOException ioe) {
+        ioe.printStackTrace();
     }
+}
 }

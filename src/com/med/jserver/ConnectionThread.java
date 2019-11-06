@@ -5,15 +5,15 @@ import java.io.*;
 
 public class ConnectionThread implements Runnable {
 
+    private Server server;
     private Socket client;
-    DataInputStream din;
-    DataOutputStream dout;
+    private DataInputStream cin;
 
-    public ConnectionThread(Socket c) {
+    public ConnectionThread(Server s, Socket c) {
         try {
+            this.server = s;
             this.client = c;
-            this.din = new DataInputStream(c.getInputStream());
-            this.dout = new DataOutputStream(c.getOutputStream());
+            this.cin = new DataInputStream(c.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -22,7 +22,7 @@ public class ConnectionThread implements Runnable {
     public void run(){
         while (true) {
             try {
-                System.out.println(din.readUTF());
+                server.broadcast(this.client, cin.readUTF());
             } catch (IOException e) {
                 System.out.println(client.getRemoteSocketAddress() + "处的远程客户端终止连接。");
                 break;
