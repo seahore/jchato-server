@@ -1,15 +1,16 @@
 root_dir=$(pwd)
-echo $root_dir
+echo now working at: $root_dir
 
 bin=$root_dir/bin
 src=$root_dir/src
 out=$root_dir/out
-echo $bin
-echo $src
-echo $out
+echo bin: $bin
+echo src: $src
+echo out: $out
 
 touch $root_dir/srclist
-find $src -name "*.java" > $root_dir/srclist
+cd $src
+find -name "*.java" > $root_dir/srclist
 cat $root_dir/srclist
 
 mkdir $out/classes
