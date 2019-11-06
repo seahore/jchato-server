@@ -28,6 +28,10 @@ public class Server implements Runnable {
         }
     }
 
+    protected void logout(Socket c) {
+        clients.remove(c);
+    }
+
     public void run() {
         System.out.println("在本地" + serverSocket.getLocalPort() + "端口处开启服务器socket，等待远程连接……");
         while (true) {

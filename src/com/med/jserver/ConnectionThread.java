@@ -25,6 +25,7 @@ public class ConnectionThread implements Runnable {
                 server.broadcast(this.client, cin.readUTF());
             } catch (IOException e) {
                 System.out.println(client.getRemoteSocketAddress() + "处的远程客户端终止连接。");
+                server.logout(this.client);
                 break;
             }
         }
