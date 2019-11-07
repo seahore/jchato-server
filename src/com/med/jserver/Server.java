@@ -6,12 +6,12 @@ import java.util.*;
 
 public class Server implements Runnable {
     private ServerSocket serverSocket;
-    private ArrayList<Socket> clients;
+    private ArrayList<Socket> clientSockets;
 
     public Server(int port) throws IOException, BindException {
         try {
             this.serverSocket = new ServerSocket(port);
-            this.clients = new ArrayList<Socket>();
+            this.clientSockets = new ArrayList<Socket>();
         } catch (BindException be) {
             throw be;
         }
@@ -20,7 +20,7 @@ public class Server implements Runnable {
 
     protected void broadcast(Socket sender, String contents) {
         try {
-            for (Socket c : clients) {
+            for (Socket c : clientSockets) {
                 new DataOutputStream(c.getOutputStream()).writeUTF(sender.getRemoteSocketAddress() + ": " + contents);
             }
         } catch (IOException ioe) {
@@ -29,7 +29,7 @@ public class Server implements Runnable {
     }
 
     protected void logout(Socket c) {
-        clients.remove(c);
+        clientSockets.remove(c);
     }
 
     public void run() {
@@ -39,7 +39,7 @@ public class Server implements Runnable {
                 Socket currentClientSocket = serverSocket.accept();
                 System.out.println("远程主机客户端请求连接，地址为" + currentClientSocket.getRemoteSocketAddress());
                 new Thread(new ConnectionThread(this, currentClientSocket)).start();
-                clients.add(currentClientSocket);
+                clientSockets.add(currentClientSocket);
             } catch (IOException ioe) {
                 ioe.printStackTrace();
             }

@@ -6,13 +6,13 @@ import java.io.*;
 public class ConnectionThread implements Runnable {
 
     private Server server;
-    private Socket client;
+    private Socket clientSocket;
     private DataInputStream cin;
 
     public ConnectionThread(Server s, Socket c) {
         try {
             this.server = s;
-            this.client = c;
+            this.clientSocket = c;
             this.cin = new DataInputStream(c.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
@@ -22,10 +22,10 @@ public class ConnectionThread implements Runnable {
     public void run(){
         while (true) {
             try {
-                server.broadcast(this.client, cin.readUTF());
+                server.broadcast(this.clientSocket, cin.readUTF());
             } catch (IOException e) {
-                System.out.println(client.getRemoteSocketAddress() + "处的远程客户端终止连接。");
-                server.logout(this.client);
+                System.out.println(clientSocket.getRemoteSocketAddress() + "处的远程客户端终止连接。");
+                server.logout(this.clientSocket);
                 break;
             }
         }
