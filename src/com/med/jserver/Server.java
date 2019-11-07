@@ -20,7 +20,7 @@ public class Server implements Runnable {
 
     protected synchronized void broadcast(String contents) {
         try {
-            contents = "服务器: " + contents;
+            contents = contents;
             System.out.println(contents);
             for (Socket c : clientSockets) {
                 new DataOutputStream(c.getOutputStream()).writeUTF(contents);

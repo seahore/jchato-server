@@ -14,7 +14,7 @@ public class ReaderThread implements Runnable {
 
     public void run() {
         while (true) {
-            receiver.broadcast(inputScanner.next());
+            receiver.broadcast("服务器：" + inputScanner.next());
         }
     }
 }
