@@ -18,10 +18,23 @@ public class Server implements Runnable {
         serverSocket.setSoTimeout(0);
     }
 
-    protected void broadcast(Socket sender, String contents) {
+    protected synchronized void broadcast(String contents) {
         try {
+            contents = "服务器: " + contents;
+            System.out.println(contents);
             for (Socket c : clientSockets) {
-                new DataOutputStream(c.getOutputStream()).writeUTF(sender.getRemoteSocketAddress() + ": " + contents);
+                new DataOutputStream(c.getOutputStream()).writeUTF(contents);
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+    protected synchronized void broadcast(Socket sender, String contents) {
+        try {
+            contents = sender.getRemoteSocketAddress() + ": " + contents;
+            System.out.println(contents);
+            for (Socket c : clientSockets) {
+                new DataOutputStream(c.getOutputStream()).writeUTF(contents);
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -34,6 +47,7 @@ public class Server implements Runnable {
 
     public void run() {
         System.out.println("在本地" + serverSocket.getLocalPort() + "端口处开启服务器socket，等待远程连接……");
+        new Thread(new ReaderThread(System.in, this)).start();
         while (true) {
             try {
                 Socket currentClientSocket = serverSocket.accept();
